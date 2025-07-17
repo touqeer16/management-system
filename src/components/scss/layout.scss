@@ -1,0 +1,169 @@
+@import "variable";
+@import '~@fortawesome/fontawesome-free/css/solid.css';
+@import './scrollbar';
+@import "page-loader";
+
+//override css bootstrap class
+.text-primary {
+  color: $dark-theme-primary !important;
+}
+
+.border-primary {
+  border-color: $dark-theme-primary !important;
+}
+
+.btn,
+.btn-close {
+  &:focus {
+    box-shadow: none !important;
+  }
+}
+
+.btn-primary {
+  background-color: $theme-primary;
+  border-color: $theme-primary;
+
+  &:hover {
+    background-color: $dark-theme-primary;
+    border-color: $dark-theme-primary;
+  }
+
+  &:focus {
+    background-color: $dark-theme-primary;
+    border-color: $dark-theme-primary;
+  }
+}
+
+.btn-primary.disabled,
+.btn-primary:disabled {
+  background-color: $dark-theme-primary;
+  border-color: $dark-theme-primary;
+}
+
+.btn-secondary {
+  background-color: $dark-gray;
+  border-color: $dark-gray;
+
+  &:hover {
+    background-color: #575757;
+    border-color: #575757;
+  }
+
+  &:focus {
+    background-color: #575757;
+    border-color: #575757;
+  }
+}
+
+.btn-secondary.disabled,
+.btn-secondary:disabled {
+  background-color: $dark-theme-primary;
+  border-color: $dark-theme-primary;
+}
+
+.bg-secondary {
+  background-color: $light-gray !important;
+}
+
+.bg-orange {
+  background-color: orangered !important;
+}
+
+.bg-danger {
+  background-color: red !important;
+}
+
+.border-line {
+  height: 2px !important;
+  background-color: $black;
+  opacity: 1;
+}
+
+//custom css
+
+/* .container-full-width {
+  @media (max-width: 1140px) {
+    width: 100%;
+  }
+} */
+
+input {
+  border-radius: 15px !important;
+  border-color: $black !important;
+  height: 50px;
+  color: $black !important;
+  font-size: 20px !important;
+  font-weight: 400 !important;
+  padding: 1px 20px !important;
+
+  &::placeholder {
+    font-size: 28px;
+    font-weight: 400;
+    color: $black !important;
+
+    @media (max-width: 480px) {
+      font-size: 22px;
+    }
+  }
+
+  &:focus {
+    box-shadow: none !important;
+    border-color: $black !important;
+  }
+
+  @media (max-width: 480px) {
+    height: 40px;
+    font-size: 22px !important;
+  }
+}
+
+select {
+  border-radius: 15px !important;
+  border-color: $black !important;
+  height: 50px;
+  color: $black !important;
+  font-size: 20px !important;
+  font-weight: 400 !important;
+  padding: 1px 20px !important;
+
+  &::placeholder {
+    font-size: 28px;
+    font-weight: 400;
+    color: $black !important;
+
+    @media (max-width: 480px) {
+      font-size: 22px;
+    }
+  }
+
+  &:focus {
+    box-shadow: none !important;
+    border-color: $black !important;
+  }
+
+  @media (max-width: 480px) {
+    height: 40px;
+    font-size: 22px !important;
+  }
+}
+
+.pend-sm-90 {
+  @media (min-width: 576px) {
+    padding-right: 90px;
+  }
+}
+
+.field-w-100 {
+  @media (max-width: 480px) {
+    width: 100%;
+  }
+}
+
+//hover table
+.coustom-hover {
+  font-weight: 500;
+
+  &:hover {
+    background: #bdece2;
+  }
+}

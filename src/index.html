@@ -1,0 +1,77 @@
+<div style="text-align:center">
+    <h1>Print PDF file from iOS & Android devices</h1>
+    <hr />
+    <label class="checkbox">
+        <input type="checkbox" id="useDefaultPrinter" /> <strong>Print to Default printer</strong>
+    </label>
+    <p>or...</p>
+    <div id="installedPrinters">
+        <label for="installedPrinterName">Select an installed Printer:</label>
+        <select name="installedPrinterName" id="installedPrinterName"></select>
+    </div>
+    <br /><br />
+    <button type="button" onclick="print();">Print Now...</button>
+</div>
+
+<script src="JSPrintManager.js"></script>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bluebird/3.3.5/bluebird.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+
+
+
+<script>
+
+    //WebSocket settings
+    JSPM.JSPrintManager.auto_reconnect = true;
+    JSPM.JSPrintManager.start(true, '10.0.0.1', 25443);
+    JSPM.JSPrintManager.WS.onStatusChanged = function () {
+        if (jspmWSStatus()) {
+            //get client installed printers
+            JSPM.JSPrintManager.getPrinters().then(function (myPrinters) {
+                var options = '';
+                for (var i = 0; i < myPrinters.length; i++) {
+                    options += '<option>' + myPrinters[i] + '</option>';
+                }
+                $('#installedPrinterName').html(options);
+            });
+        }
+    };
+
+    //Check JSPM WebSocket status
+    function jspmWSStatus() {
+        if (JSPM.JSPrintManager.websocket_status == JSPM.WSStatus.Open)
+            return true;
+        else if (JSPM.JSPrintManager.websocket_status == JSPM.WSStatus.Closed) {
+            alert('JSPrintManager (JSPM) is not installed or not running in the print server! Download and install JSPM Client App from https://neodynamic.com/downloads/jspm');
+            return false;
+        }
+        else if (JSPM.JSPrintManager.websocket_status == JSPM.WSStatus.Blocked) {
+            alert('JSPM has blocked this website!');
+            return false;
+        }
+    }
+
+    //Do printing...
+    function print(o) {
+        if (jspmWSStatus()) {
+            //Create a ClientPrintJob
+            var cpj = new JSPM.ClientPrintJob();
+            //Set Printer type (Refer to the help, there many of them!)
+            if ($('#useDefaultPrinter').prop('checked')) {
+                cpj.clientPrinter = new JSPM.DefaultPrinter();
+            } else {
+                cpj.clientPrinter = new JSPM.InstalledPrinter($('#installedPrinterName').val());
+            }
+            //Set content to print... in this sample, a pdf file
+            var myPdfFile = new JSPM.PrintFilePDF('https://neodynamic.com/temp/LoremIpsum.pdf', JSPM.FileSourceType.URL, 'myFileToPrint.pdf', 1);
+            //add file to print job
+            cpj.files.push(myPdfFile);
+
+            //Send print job to printer!
+            cpj.sendToClient();
+        }
+    }
+
+</script>
